@@ -35,7 +35,7 @@ https://spring.io/guides/gs/accessing-mongodb-data-rest/
 
 项目的整体示意图见下，结合项目代码中的文档注释即可了解项目
 
-![image-20201004200923459](C:\Users\zfy\AppData\Roaming\Typora\typora-user-images\image-20201004200923459.png)
+![image-20201004200923459](https://github.com/SWYZZWH/huiyou_backend/blob/master/pics/image-20201004200923459.png)
 
 
 

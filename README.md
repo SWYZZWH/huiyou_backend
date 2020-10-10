@@ -1,5 +1,15 @@
 # README
 
+### Update 2020/10/10 by zwh
+
+已将我们的服务设置为守护进程，现在关闭SSH连接后服务仍可以在后台运行
+
+更新了Todo list, 新增任务：管理前端的静态文件（通过Ngnix）
+
+将api的格式改为了ip:port/api/records/...，这是为了和传输文件的请求相区分
+
+
+
 ### 配置java开发环境
 
 - 安装jdk-15，并正确设置环境变量
@@ -80,7 +90,7 @@ Body选择Raw，格式如下：
 
 
 
-## 部署
+### 部署
 
 - 准备工具xftp,xshell(腾讯云自带的不好用)，并分别与服务器建立连接
 
@@ -146,7 +156,7 @@ https://www.osradar.com/how-to-install-java-15-on-centos-8-centos-7/ 安装jdk-1
 
 
 
-### To do list
+### Todo list
 
 - [x] 部署到服务器
 

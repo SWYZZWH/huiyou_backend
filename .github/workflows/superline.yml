@@ -1,7 +1,10 @@
 name: Super-Linter
 
 # Run this workflow every time a new commit pushed to your repository
-on: push
+on: 
+  push:
+    branches:
+      - master
 
 jobs:
   # Set the job key. The key is displayed as the job name
@@ -10,16 +13,25 @@ jobs:
     # Name the Job
     name: Auto deploy
     # Set the type of machine to run on
-    runs-on: centos7
+    runs-on: ubuntu-latest
 
     steps:
-      # Checks out a copy of your repository on the centos7 machine
+      # Checks out a copy of your repository on the ubuntu-latest machine
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # Runs the Super-Linter action
-      - name: Run Super-Linter
-        uses: github/super-linter@v3
+      - name: ssh deploy
+        uses: easingthemes/ssh-deploy@v2.1.5
         env:
-          DEFAULT_BRANCH: master
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Private Key
+          SSH_PRIVATE_KEY: ${{ secret:ACCESS_TOKEN }}
+          # Remote host
+          REMOTE_HOST: 106.54.69.78
+          # Remote user
+          REMOTE_USER: root
+          # Remote port
+          REMOTE_PORT: 22
+          # Source directory
+          SOURCE: demo/target/demo-0.0.1-SNAPSHOT.jar
+          # Target directory
+          TARGET: /usr/local/huiyou-backend

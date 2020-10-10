@@ -47,6 +47,9 @@ jobs:
           key: ${{ secrets.ACCESS_TOKEN }}
           # execute commands
           script: |
+            sudo kill -9 $(lsof -i:端口号 -t)
             cd /usr/local/huiyou-backend
             java -jar demo-0.0.1-SNAPSHOT.jar &
             disown
+            exit
+            

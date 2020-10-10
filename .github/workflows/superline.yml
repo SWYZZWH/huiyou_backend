@@ -24,14 +24,12 @@ jobs:
         uses: easingthemes/ssh-deploy@v2.1.5
         env:
           # Private Key
-          SSH_PRIVATE_KEY: ${{ secrets:ACCESS_TOKEN }}
+          SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
           # Remote host
-          REMOTE_HOST: 106.54.69.78
+          REMOTE_HOST: "106.54.69.78"
           # Remote user
-          REMOTE_USER: root
-          # Remote port
-          REMOTE_PORT: 22
+          REMOTE_USER: "root"
           # Source directory
-          SOURCE: demo/target/demo-0.0.1-SNAPSHOT.jar
+          SOURCE: "demo/target/demo-0.0.1-SNAPSHOT.jar"
           # Target directory
-          TARGET: /usr/local/huiyou-backend
+          TARGET: "/usr/local/huiyou-backend"

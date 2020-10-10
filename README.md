@@ -1,5 +1,11 @@
 # README
 
+### Update 2020/10/11 by zwh
+
+实现了自动部署
+
+
+
 ### Update 2020/10/10 by zwh
 
 已将我们的服务设置为守护进程，现在关闭SSH连接后服务仍可以在后台运行
@@ -164,6 +170,8 @@ https://www.osradar.com/how-to-install-java-15-on-centos-8-centos-7/ 安装jdk-1
 
 - [x] 将服务注册为守护进程（避免关掉SSH连接进程就结束）
 
+- [x] 自动部署
+
 - [ ] 为历史记录Model添加观看时间与观看时长字段，并编写对应的CRUD语句
 
 - [ ] 更多Models
@@ -171,9 +179,6 @@ https://www.osradar.com/how-to-install-java-15-on-centos-8-centos-7/ 安装jdk-1
 - [ ] 管理前端静态文件
 
   
-
-  
-
 
 
 ### 一些想法

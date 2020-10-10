@@ -21,7 +21,7 @@ import xyz.zwhzwhzwh.repositories.RecordRepository;
  * 解析url，并调用对应的方法操作数据库
  * */
 @RestController
-@RequestMapping("/records")
+@RequestMapping("/api/records")
 public class RecordController {
 	
 	@Autowired

@@ -1,7 +1,5 @@
 # README
 
-
-
 ### 配置java开发环境
 
 - 安装jdk-15，并正确设置环境变量
@@ -39,8 +37,6 @@ https://spring.io/guides/gs/accessing-mongodb-data-rest/
 
 
 
-
-
 ### 运行项目
 
 git clone git@github.com:SWYZZWH/huiyou_backend.git
@@ -59,13 +55,13 @@ run as ... > maven build ... goals 设为 package，build 项目
 
 使用postman测试
 
-| 请求类型 | URL                                                 | 备注                                           |
-| -------- | --------------------------------------------------- | ---------------------------------------------- |
-| GET      | http://localhost:8080/records/byBv/BV1WZ4y1577e     | 根据Bv号查询历史记录                           |
-| GET      | http://localhost:8080/records/byBv/BV1WZ4y1577      | Bv号查询，应当返回空                           |
-| GET      | http://localhost:8080/records/byUid/bili_5249176387 | 根据uid查询历史记录                            |
-| GET      | http://localhost:8080/records/byUid/bili_524917638  | uid查询，应当返回空                            |
-| POST     | http://localhost:8080/records/save                  | 新增一条历史记录，需要设置Header和Body（见下） |
+| 请求类型 | URL                                                     | 备注                                           |
+| -------- | ------------------------------------------------------- | ---------------------------------------------- |
+| GET      | http://localhost:8080/api/records/byBv/BV1WZ4y1577e     | 根据Bv号查询历史记录                           |
+| GET      | http://localhost:8080/api/records/byBv/BV1WZ4y1577      | Bv号查询，应当返回空                           |
+| GET      | http://localhost:8080/api/records/byUid/bili_5249176387 | 根据uid查询历史记录                            |
+| GET      | http://localhost:8080/api/records/byUid/bili_524917638  | uid查询，应当返回空                            |
+| POST     | http://localhost:8080/api/records/save                  | 新增一条历史记录，需要设置Header和Body（见下） |
 
  header中新增key-value对：Content-Type     application/json
 
@@ -103,7 +99,7 @@ Body选择Raw，格式如下：
 
 - 本地使用maven clean + maven build（package）生成target目录与jar文件
 
-- 使用xftp将jar文件传到server的/usr/local/huiyou目录下（别的目录也可）
+- 使用xftp将jar文件传到server的/usr/local/huiyou-backend目录下（别的目录也可）
 - 在该目录下 输入命令：java -jar ***.jar 启动服务
 - 现在可以在任何位置以http://106.54.69.78:8080/访问服务
 
@@ -121,7 +117,7 @@ https://www.osradar.com/how-to-install-java-15-on-centos-8-centos-7/ 安装jdk-1
 
 - 使用postman并输入如下url作为测试（GET请求）：
 
-  http://106.54.69.78:8080/records/byUid/bili_5249176387
+  http://106.54.69.78:8080/api/records/byUid/bili_5249176387
 
   应当能看到类似结果：
 
@@ -152,13 +148,17 @@ https://www.osradar.com/how-to-install-java-15-on-centos-8-centos-7/ 安装jdk-1
 
 ### To do list
 
-- ~~部署到服务器~~
+- [x] 部署到服务器
 
-- 将服务注册为守护进程（避免关掉SSH连接进程就结束）
+- [x] 将服务注册为守护进程（避免关掉SSH连接进程就结束）
 
-- 为历史记录Model添加观看时间与观看时长字段，并编写对应的CRUD语句
+- [ ] 为历史记录Model添加观看时间与观看时长字段，并编写对应的CRUD语句
 
-- 更多Models
+- [ ] 更多Models
+
+- [ ] 管理前端静态文件
+
+  
 
   
 

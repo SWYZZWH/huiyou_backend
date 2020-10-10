@@ -8,6 +8,8 @@
 
 将api的格式改为了ip:port/api/records/...，这是为了和传输文件的请求相区分
 
+测试github的自动化配置工具Action
+
 
 
 ### 配置java开发环境

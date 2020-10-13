@@ -1,5 +1,13 @@
 # README
 
+### Update 2020/10/14 by zwh
+
+更新了Todo list
+
+推荐链的初步构思已加到/docs/后端开发文档中
+
+
+
 ### Update 2020/10/11 by zwh
 
 实现了自动部署
@@ -167,18 +175,15 @@ https://www.osradar.com/how-to-install-java-15-on-centos-8-centos-7/ 安装jdk-1
 ### Todo list
 
 - [x] 部署到服务器
-
 - [x] 将服务注册为守护进程（避免关掉SSH连接进程就结束）
-
 - [x] 自动部署
+- [ ] 新增字段（播放时间，缩略图，作者等，需要和前端沟通）
+- [ ] 为每个用户可存储的记录数设置上限
+- [ ] 配置域名并备案
+- [ ] 改造github项目，添加看板功能，规范协作流程
+- [ ] 思考如何实现推荐链
 
-- [ ] 为历史记录Model添加观看时间与观看时长字段，并编写对应的CRUD语句
 
-- [ ] 更多Models
-
-- [ ] 管理前端静态文件
-
-  
 
 
 ### 一些想法
@@ -196,5 +201,3 @@ https://www.osradar.com/how-to-install-java-15-on-centos-8-centos-7/ 安装jdk-1
 - 无水印
 
 - 严肃向分区
-
-使用MongoDB Altas的好处？

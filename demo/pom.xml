@@ -41,6 +41,18 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
+		<dependency>
+  			<groupId>com.github.terran4j</groupId>
+  			<artifactId>terran4j-commons-api2doc</artifactId>
+  			<version>1.0.2</version>
+		</dependency>
+		
+		<dependency>
+  			<groupId>org.apache.httpcomponents</groupId>
+  			<artifactId>httpclient</artifactId>
+  			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

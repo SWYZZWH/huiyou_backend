@@ -20,12 +20,13 @@ import xyz.zwhzwhzwh.models.HistoryRecord;
  */
 public interface RecordRepository extends MongoRepository<HistoryRecord, ObjectId> {
 	
-	/***/
 	List<HistoryRecord> findAll();
 	
 	List<HistoryRecord> findByUid(@Param("uid") String uid);
 	
 	List<HistoryRecord> findByBv(@Param("bv") String bv);
+	
+	List<HistoryRecord> findByUidAndBv(@Param("uid") String uid, @Param("bv") String bv);
 	
 	@SuppressWarnings("unchecked")
 	HistoryRecord save(HistoryRecord history_record);

@@ -1,5 +1,17 @@
 # README
 
+### Update 2020/10/20 by zwh
+
+更新了API文档 https://www.showdoc.cc/1096444849681105
+
+已配置https
+
+域名已备案
+
+新增了看板功能
+
+
+
 ### Update 2020/10/14 by zwh
 
 更新了Todo list
@@ -23,6 +35,12 @@
 将api的格式改为了ip:port/api/records/...，这是为了和传输文件的请求相区分
 
 测试github的自动化配置工具Action
+
+
+
+### API文档
+
+https://www.showdoc.cc/1096444849681105
 
 
 

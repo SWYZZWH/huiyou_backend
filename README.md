@@ -38,9 +38,7 @@
 
 
 
-### API文档
 
-https://www.showdoc.cc/1096444849681105
 
 
 
@@ -95,17 +93,23 @@ run as ... > maven build ... goals 设为 package，build 项目
 
 
 
+### API文档
+
+https://www.showdoc.cc/1096444849681105
+
+
+
 ### 测试项目
 
 使用postman测试
 
-| 请求类型 | URL                                                     | 备注                                           |
-| -------- | ------------------------------------------------------- | ---------------------------------------------- |
-| GET      | http://localhost:8080/api/records/byBv/BV1WZ4y1577e     | 根据Bv号查询历史记录                           |
-| GET      | http://localhost:8080/api/records/byBv/BV1WZ4y1577      | Bv号查询，应当返回空                           |
-| GET      | http://localhost:8080/api/records/byUid/bili_5249176387 | 根据uid查询历史记录                            |
-| GET      | http://localhost:8080/api/records/byUid/bili_524917638  | uid查询，应当返回空                            |
-| POST     | http://localhost:8080/api/records/save                  | 新增一条历史记录，需要设置Header和Body（见下） |
+| 请求类型 | URL                                                          | 备注                                           |
+| -------- | ------------------------------------------------------------ | ---------------------------------------------- |
+| GET      | https://huiyou.fun/api/records                               | 返回全部历史记录                               |
+| GET      | https://huiyou.fun/api/records?bv=BV1kt4y1q7GE               | 根据Bv号查询历史记录                           |
+| GET      | https://huiyou.fun/api/records?uid=bili_5249176387           | 根据uid查询历史记录                            |
+| GET      | https://huiyou.fun/api/records?bv=BV1kt4y1q7GE&uid=bili_5249176387 | 根据uid和bv号查询历史记录                      |
+| POST     | https://huiyou.fun/api/records/                              | 新增一条历史记录，需要设置Header和Body（见下） |
 
  header中新增key-value对：Content-Type     application/json
 

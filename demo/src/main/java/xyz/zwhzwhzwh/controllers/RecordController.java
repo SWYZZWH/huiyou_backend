@@ -52,12 +52,13 @@ public class RecordController {
 			return new ArrayList<HistoryRecord>();
 		}
 	}
+
 	/*
 	@GetMapping(value = "/byUid/{uid}")
 	public List<HistoryRecord> getHistoryRecordsByUid(@PathVariable("uid") String uid) {
 		return record_repository.findByUid(uid);
 	}
-	
+
 	@GetMapping(value = "/byBv/{bv}")
 	public List<HistoryRecord> getHsHistoryRecordsByBv(@PathVariable("bv") String bv){
 		return record_repository.findByBv(bv);

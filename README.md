@@ -17,7 +17,6 @@
     private String type;
 ```
 
-有查询全部内容的问题 待修正
 
 ### Update 2020/10/20 by zwh
 

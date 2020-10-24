@@ -1,5 +1,23 @@
 # README
 
+## Update 2020/10/24 by yst
+
+添加了如下键值
+
+```java
+    private String author;
+    private String description;
+    private int duration;
+    private int favourites;
+    private String pic;
+    private String play;
+    private String pubdate;
+    private String tag;
+    private String title;
+    private String type;
+```
+
+
 ### Update 2020/10/20 by zwh
 
 更新了API文档 https://www.showdoc.cc/1096444849681105

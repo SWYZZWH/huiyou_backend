@@ -28,6 +28,8 @@ public class HistoryRecord {
     private int rank_offset;
     private int rank_index;
     private int rank_score;
+    private int review;
+    private int senddate;
     private String tag;
     private String title;
     private String type;

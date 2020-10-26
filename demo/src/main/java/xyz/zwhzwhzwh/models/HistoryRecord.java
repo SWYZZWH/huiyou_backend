@@ -33,6 +33,8 @@ public class HistoryRecord {
     private int rank_offset;
     private int rank_index;
     private int rank_score;
+    private int review;
+    private int senddate;
     private String tag;
     private String title;
     private String type;
@@ -45,7 +47,7 @@ public class HistoryRecord {
     //,String author,String description,int duration,int favourites,String pic, String play
     //	, String pubdate,String tag,String title,String type
 
-    public HistoryRecord(ObjectId id, String uid, String bv, String arcrank, String arcurl, String author, boolean badgepay, String description, int duration, int favourites, int is_pay, int is_union_video, int mid, String pic, String play, String pubdate, int rank_offset, int rank_index, int rank_score, String tag, String title, String type, int video_review) {
+    public HistoryRecord(ObjectId id, String uid, String bv, String arcrank, String arcurl, String author, boolean badgepay, String description, int duration, int favourites, int is_pay, int is_union_video, int mid, String pic, String play, String pubdate, int rank_offset, int rank_index, int rank_score, int review,int senddate,String tag, String title, String type, int video_review) {
         super();
         this.id = id;
         this.uid = uid;
@@ -65,6 +67,8 @@ public class HistoryRecord {
         this.rank_index = rank_index;
         this.rank_offset = rank_offset;
         this.rank_score = rank_score;
+        this.review = review;
+        this.senddate =senddate;
         this.tag = tag;
         this.title = title;
         this.type = type;
@@ -213,6 +217,22 @@ public class HistoryRecord {
 
     public void setRank_score(int rank_score) {
         this.rank_score = rank_score;
+    }
+
+    public int getReview() {
+        return review;
+    }
+
+    public void setReview(int review) {
+        this.review = review;
+    }
+
+    public int getSenddate() {
+        return senddate;
+    }
+
+    public void setSenddate(int senddate) {
+        this.senddate = senddate;
     }
 
     public String getTag() {

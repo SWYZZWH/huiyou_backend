@@ -1,5 +1,45 @@
 # README
 
+## Update 2020/10/26 by yst
+
+键值扩展如下：
+
+```java
+public class HistoryRecord {
+    @Id
+    private ObjectId id;
+
+    private String uid;
+    private String bv;
+
+    private String arcrank;
+    private String arcurl;
+    private String author;
+    private boolean badgepay;
+    private String description;
+    private int duration;
+    private int favourites;
+    private int is_pay;
+    private int is_union_video;
+    private int mid;
+    private String pic;
+    private String play;
+    private String pubdate;
+    private int rank_offset;
+    private int rank_index;
+    private int rank_score;
+    private String tag;
+    private String title;
+    private String type;
+    private int video_review;
+```
+
+其中在原本给出的数据列表中除去了id项，由于名字冲突。
+
+## Update 2020/10/24 by zwh
+
+后端已可用
+
 ## Update 2020/10/24 by yst
 
 添加了如下键值
@@ -16,8 +56,6 @@
     private String title;
     private String type;
 ```
-
-有查询全部内容的问题 待修正
 
 ### Update 2020/10/20 by zwh
 

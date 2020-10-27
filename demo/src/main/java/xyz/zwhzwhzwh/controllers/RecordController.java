@@ -39,15 +39,15 @@ public class RecordController {
 	public List<HistoryRecord> getAllHistoryRecords(@RequestParam Map<String, String> queryParams){
 		try {
 			String uid = queryParams.get("uid");
-			String bv = queryParams.get("bv");
-			if(uid == null && bv == null)
+			String bvid = queryParams.get("bvid");
+			if(uid == null && bvid == null)
 				return record_repository.findAll();
 			else if(uid == null)
-				return record_repository.findByBv(bv);
-			else if(bv == null)
+				return record_repository.findByBvid(bvid);
+			else if(bvid == null)
 				return record_repository.findByUid(uid);
 			else
-				return record_repository.findByUidAndBv(uid, bv);
+				return record_repository.findByUidAndBvid(uid, bvid);
 		} catch (Exception e) {
 			return new ArrayList<HistoryRecord>();
 		}
@@ -71,6 +71,7 @@ public class RecordController {
 			record_repository.save(history_record);
 		} catch (Exception e) {
 			// TODO: handle exception
+			
 		}
 		return new ResponseEntity("Record added successfully", HttpStatus.OK);
 	}

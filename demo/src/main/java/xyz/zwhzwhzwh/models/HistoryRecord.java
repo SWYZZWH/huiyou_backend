@@ -15,7 +15,7 @@ public class HistoryRecord {
     private ObjectId id;
 
     private String uid;
-    private String bv;
+    private String bvid;
 
     private String arcrank;
     private String arcurl;
@@ -23,7 +23,7 @@ public class HistoryRecord {
     private boolean badgepay;
     private String description;
     private int duration;
-    private int favourites;
+    private int favorites;
     private int is_pay;
     private int is_union_video;
     private int mid;
@@ -44,23 +44,24 @@ public class HistoryRecord {
     //private ZonedDateTime watch_time;
     //private int watch_length;
 
-    //,String author,String description,int duration,int favourites,String pic, String play
+    //,String author,String description,int duration,int favorites,String pic, String play
     //	, String pubdate,String tag,String title,String type
 
-    public HistoryRecord(ObjectId id, String uid, String bv, String arcrank, String arcurl, String author, boolean badgepay, String description, int duration, int favourites, int is_pay, int is_union_video, int mid, String pic, String play, String pubdate, int rank_offset, int rank_index, int rank_score, int review,int senddate,String tag, String title, String type, int video_review) {
+    public HistoryRecord(ObjectId id, String uid, String bvid, String arcrank, String arcurl, String author, boolean badgepay, String description, int duration, int favorites, int is_pay, int is_union_video, int mid, String pic, String play, String pubdate, int rank_offset, int rank_index, int rank_score, int review,int senddate,String tag, String title, String type, int video_review) {
         super();
         this.id = id;
         this.uid = uid;
-        this.bv = bv;
+        this.bvid = bvid;
         this.arcrank = arcrank;
         this.arcurl = arcurl;
         this.author = author;
         this.badgepay = badgepay;
         this.description = description;
         this.duration = duration;
-        this.favourites = favourites;
+        this.favorites = favorites;
         this.is_pay = is_pay;
         this.is_union_video = is_union_video;
+        this.mid = mid;
         this.pic = pic;
         this.play = play;
         this.pubdate = pubdate;
@@ -83,12 +84,12 @@ public class HistoryRecord {
         this.uid = uid;
     }
 
-    public String getBv() {
-        return bv;
+    public String getBvid() {
+        return bvid;
     }
 
-    public void setBv(String bv) {
-        this.bv = bv;
+    public void setBvid(String bvid) {
+        this.bvid = bvid;
     }
 
     public String getArcrank() {
@@ -139,12 +140,12 @@ public class HistoryRecord {
         this.duration = duration;
     }
 
-    public int getFavourites() {
-        return favourites;
+    public int getfavorites() {
+        return favorites;
     }
 
-    public void setFavourites(int favourites) {
-        this.favourites = favourites;
+    public void setfavorites(int favorites) {
+        this.favorites = favorites;
     }
 
     public int getIs_pay() {
@@ -284,7 +285,7 @@ public class HistoryRecord {
 
     @Override
     public String toString() {
-        return "HistoryRecord [uid=" + uid + ", bv=" + bv + "]";
+        return "HistoryRecord [uid=" + uid + ", bvid=" + bvid + "]";
     }
 
     @Override

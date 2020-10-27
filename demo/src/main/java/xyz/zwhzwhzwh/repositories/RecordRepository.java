@@ -24,9 +24,9 @@ public interface RecordRepository extends MongoRepository<HistoryRecord, ObjectI
 	
 	List<HistoryRecord> findByUid(@Param("uid") String uid);
 	
-	List<HistoryRecord> findByBv(@Param("bv") String bv);
+	List<HistoryRecord> findByBvid(@Param("bvid") String bvid);
 	
-	List<HistoryRecord> findByUidAndBv(@Param("uid") String uid, @Param("bv") String bv);
+	List<HistoryRecord> findByUidAndBvid(@Param("uid") String uid, @Param("bvid") String bvid);
 	
 	@SuppressWarnings("unchecked")
 	HistoryRecord save(HistoryRecord history_record);

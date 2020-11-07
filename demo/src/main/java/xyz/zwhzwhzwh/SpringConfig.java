@@ -29,32 +29,10 @@ public class SpringConfig {
    
     @Bean
     public MongoClient mongoClient() {
-    	//不指定codeRegistry，使用默认的
-        //CodecRegistry pojoCodecRegistry = fromProviders(PojoCodecProvider.builder().automatic(true).build());
-        //CodecRegistry codecRegistry = fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), pojoCodecRegistry);
         return MongoClients.create(MongoClientSettings.builder()
                                                       .applyConnectionString(new ConnectionString(connectionString))
-                                                      //.codecRegistry(codecRegistry)
                                                       .build());
     }
    
 
 }
-
-//另一种写法
-/*
-public class MongoConnector{
-	
-	private final MongoDatabaseFactory mongo;
-	
-	@Autowired
-	public MongoConnector(MongoDatabaseFactory mongo) {
-		this.mongo = mongo;
-	}
-	
-	public void connect() {
-		MongoDatabase db = mongo.getMongoDatabase();
-	}
-	
-}
-*/

@@ -24,7 +24,7 @@ public class DemoApplication {
 				registry.addMapping("/**"). //允许所有映射
 				allowCredentials(true). 
 				allowedOrigins("*"). //允许所有原始域
-				allowedMethods(new String[] {"GET", "POST", "DELETE", "PUT"}).allowedHeaders("*"); // 允许所有方法;
+				allowedMethods("*").allowedHeaders("*"); // 允许所有方法;
 			}
 		};
 	}

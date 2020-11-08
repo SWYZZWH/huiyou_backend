@@ -115,7 +115,7 @@ public class ApiController {
 	}
 	
 	@GetMapping(value = "/videos")
-	public TopVideo getTopVideo(@RequestParam Map<String, String> queryParams) {
+	public ResponseEntity<?> getTopVideo(@RequestParam Map<String, String> queryParams) {
 		//返回下一条推荐的视频
 		//String event = queryParams.get("event");
 		//需要判断待推送的视频是否曾经推给过用户
@@ -157,12 +157,12 @@ public class ApiController {
 			//决定推荐该视频，这时，要扣除该视频的热度值 -2
 			retVideo.setScore(retVideo.getScore() - 2);
 			video_repository.save(retVideo);
-			return retVideo;
+			return new ResponseEntity<>(retVideo, HttpStatus.OK) ;
 		}
 		else {
 			//logging...
 			//返回错误信息
-			return null;
+			return new ResponseEntity<>("null", HttpStatus.OK) ;
 		}
 		
 	}

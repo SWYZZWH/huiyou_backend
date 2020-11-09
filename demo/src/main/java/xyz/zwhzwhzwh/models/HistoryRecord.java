@@ -15,7 +15,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class HistoryRecord {
     @Id
     private ObjectId id;
-
+    
+    
     private String uid;
     private String bvid;
     private long time;
@@ -28,12 +29,6 @@ public class HistoryRecord {
 		this.time = date.getTime();
 	}
 	
-	public ObjectId getId() {
-		return id;
-	}
-	public void setId(ObjectId id) {
-		this.id = id;
-	}
 	public String getUid() {
 		return uid;
 	}
@@ -46,7 +41,13 @@ public class HistoryRecord {
 	public void setBvid(String bvid) {
 		this.bvid = bvid;
 	}
-		
+	public long getTime() {
+		return time;
+	}
+	public void setTime(long time) {
+		this.time = time;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

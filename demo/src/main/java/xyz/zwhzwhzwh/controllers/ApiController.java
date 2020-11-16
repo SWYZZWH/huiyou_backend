@@ -1,13 +1,11 @@
 package xyz.zwhzwhzwh.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+import org.springframework.data.querydsl.QSort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -64,10 +62,56 @@ public class ApiController {
 			return new ArrayList<HistoryRecord>();
 		}
 	}
+
+	@GetMapping(value = "/test")
+	public List<HistoryRecord> test4sorting(@RequestParam Map<String, String> queryParams){
+		try{
+			String uid = queryParams.get("uid");
+			String bvid = queryParams.get("bvid");
+
+			List<HistoryRecord> user = record_repository.findByUid(uid);
+			System.out.println("origin:");
+			for (HistoryRecord record : user) {
+				System.out.println(record.getTime());
+			}
+			if(user.size()>=1){
+				//按照时间戳排序
+				Collections.sort(user);
+				System.out.println("sorted:");
+				for (HistoryRecord historyRecord : user) {
+					System.out.println(historyRecord.getTime());
+				}
+				return user.subList(0,user.size());
+			}
+			else return user;
+		} catch (Exception e) {
+			return new ArrayList<HistoryRecord>();
+		}
+
+	}
 	
 	@PostMapping(value = "/records")
 	public ResponseEntity<?> saveOrUpdateRecord(@RequestBody HistoryRecord history_record){
 		try {
+			List<HistoryRecord> user = record_repository.findByUid(history_record.getUid());
+			// testing
+			System.out.println("origin:");
+			for (HistoryRecord record : user) {
+				System.out.println(record.getTime());
+			}
+			if(user.size()>=100){
+				//按照时间戳排序
+				Collections.sort(user);
+				//testing
+				System.out.println("sorted:");
+				for (HistoryRecord historyRecord : user) {
+					System.out.println(historyRecord.getTime());
+				}
+				//取前5个
+				List<HistoryRecord> delete = user.subList(0,5);
+				//删除
+				record_repository.deleteAll(delete);
+			}
 			record_repository.save(history_record);
 			//如果这条记录是由前端随机选取视频产生的，那么要把视频保存下来，播放量可以先置为1
 			String bvid = history_record.getBvid();
@@ -253,5 +297,4 @@ public class ApiController {
 		}
 		return new ResponseEntity<>("Videos have been added successfully.", HttpStatus.OK);
 	}
-	
 }

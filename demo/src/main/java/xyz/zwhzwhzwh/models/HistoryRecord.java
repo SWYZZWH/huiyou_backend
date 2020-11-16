@@ -12,64 +12,75 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * 历史记录表
  */
 @Document(collection = "records") //与record数据库链接
-public class HistoryRecord {
+public class HistoryRecord implements Comparable<HistoryRecord> {
     @Id
     private ObjectId id;
-    
-    
+
     private String uid;
     private String bvid;
     private long time;
-    
-	public HistoryRecord(String uid, String bvid) {
-		super();
-		this.uid = uid;
-		this.bvid = bvid;
-		Date date = new Date();
-		this.time = date.getTime();
-	}
-	
-	public String getUid() {
-		return uid;
-	}
-	public void setUid(String uid) {
-		this.uid = uid;
-	}
-	public String getBvid() {
-		return bvid;
-	}
-	public void setBvid(String bvid) {
-		this.bvid = bvid;
-	}
-	public long getTime() {
-		return time;
-	}
-	public void setTime(long time) {
-		this.time = time;
-	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		HistoryRecord other = (HistoryRecord) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
-	
+    public HistoryRecord(String uid, String bvid) {
+        super();
+        this.uid = uid;
+        this.bvid = bvid;
+        Date date = new Date();
+        this.time = date.getTime();
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getBvid() {
+        return bvid;
+    }
+
+    public void setBvid(String bvid) {
+        this.bvid = bvid;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        HistoryRecord other = (HistoryRecord) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
+    }
+
+    @Override
+    public int compareTo(HistoryRecord historyRecord) {
+        if (this.time > historyRecord.time) return 1;
+        else if (this.time == historyRecord.time) return 0;
+        else return -1;
+    }
 }

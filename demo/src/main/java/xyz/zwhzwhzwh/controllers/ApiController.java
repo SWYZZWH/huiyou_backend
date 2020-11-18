@@ -21,12 +21,18 @@ import org.springframework.web.bind.annotation.RestController;
 import xyz.zwhzwhzwh.models.EventPost;
 import xyz.zwhzwhzwh.models.HistoryRecord;
 import xyz.zwhzwhzwh.models.TopVideo;
+import xyz.zwhzwhzwh.models.Log;
 import xyz.zwhzwhzwh.repositories.RecordRepository;
 import xyz.zwhzwhzwh.repositories.VideoRepository;
+import xyz.zwhzwhzwh.repositories.LogRepository;
 
 /**
  * 解析url，并调用对应的方法操作数据库
- * */
+ **/
+class ErrorCode{
+	public static final int Log_Insert_Error = 201;
+}
+
 @RestController
 @RequestMapping("/api")
 public class ApiController {
@@ -39,6 +45,9 @@ public class ApiController {
 	
 	@Autowired
 	private VideoRepository video_repository;
+
+	@Autowired
+	private LogRepository log_repository;
 	
 	@GetMapping(value = "/all")
 	public List<HistoryRecord> getAllHistoryRecords(){
@@ -296,5 +305,17 @@ public class ApiController {
 			return new ResponseEntity<>("Videos have been added failed.", HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<>("Videos have been added successfully.", HttpStatus.OK);
+	}
+
+	@Postmapping(value = "/log")
+	public ResponseEntity saveVideos(@RequestBody Log log_info){
+		try{
+			log_repository.save(log_info);
+			return new ResponseEntity<>("Log added successfully", HttpStatus.OK);
+		} catch (Exception e){
+			//TODO: exception handling
+			log = new Log(ErrorCode.Log_Insert_Error,"new log saving failed!");
+			return new ResponseEntity<>("Log insert failed", HttpStatus.BAD_REQUEST);
+		}
 	}
 }

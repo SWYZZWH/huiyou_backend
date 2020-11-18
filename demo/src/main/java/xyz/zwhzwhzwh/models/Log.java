@@ -10,10 +10,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Log {
 
     private long time;
-    private String ErrCode;
+    private int ErrCode;
     private String Description;
 
-    public Log(String ErrCode,String Description){
+    public Log(int ErrCode,String Description){
         this.ErrCode = ErrCode;
         this.Description = Description;
         Date now = new Date();
@@ -28,11 +28,11 @@ public class Log {
         this.time = time;
     }
 
-    public String getErrCode() {
+    public int getErrCode() {
         return ErrCode;
     }
 
-    public void setErrCode(String errCode) {
+    public void setErrCode(int errCode) {
         ErrCode = errCode;
     }
 

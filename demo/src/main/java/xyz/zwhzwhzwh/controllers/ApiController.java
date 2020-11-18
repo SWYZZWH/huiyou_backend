@@ -36,7 +36,7 @@ class ErrorCode {
     public static final Integer Log_Get_Error = 252;
 	public static final Integer Video_Promote_Error = 351;
 	public static final Integer Video_Update_Error = 352;
-	public static final List<Integer> list = Arrays.asList(151, 152, 251, 252);
+	public static final List<Integer> list = Arrays.asList(151, 152, 251, 252,351,352);
 }
 
 @RestController

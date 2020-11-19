@@ -29,14 +29,16 @@ import xyz.zwhzwhzwh.repositories.LogRepository;
 /**
  * 解析url，并调用对应的方法操作数据库
  **/
+// 错误码的定义
 class ErrorCode {
     public static final Integer Record_Post_Error = 151;
     public static final Integer Record_Get_Error = 152;
     public static final Integer Log_Post_Error = 251;
     public static final Integer Log_Get_Error = 252;
-	public static final Integer Video_Promote_Error = 351;
-	public static final Integer Video_Update_Error = 352;
-	public static final List<Integer> list = Arrays.asList(151, 152, 251, 252,351,352);
+    public static final Integer Video_Promote_Error = 351;
+    public static final Integer Video_Update_Error = 352;
+    //用来在前端传log的时候检查是否存在 目前没有找到更好的办法解决这个空间问题
+    public static final List<Integer> list = Arrays.asList(151, 152, 251, 252, 351, 352);
 }
 
 @RestController
@@ -74,12 +76,14 @@ public class ApiController {
             else
                 return record_repository.findByUidAndBvid(uid, bvid);
         } catch (Exception e) {
+            // 错误码152
             Log error = new Log(ErrorCode.Record_Get_Error, e.toString());
             log_repository.save(error);
             return new ArrayList<HistoryRecord>();
         }
     }
 
+    // 测试排序等功能
     @GetMapping(value = "/test")
     public List<HistoryRecord> test4sorting(@RequestParam Map<String, String> queryParams) {
         try {
@@ -109,9 +113,10 @@ public class ApiController {
     public ResponseEntity<?> saveOrUpdateRecord(@RequestBody HistoryRecord history_record) {
         try {
             if (history_record.getBvid() == null || history_record.getUid() == null || history_record.getBvid().equals("") || history_record.getUid().equals("")) {
-				Log error = new Log(ErrorCode.Record_Post_Error, "Invalid record");
-				log_repository.save(error);
-				return new ResponseEntity<>("Record added failed", HttpStatus.BAD_REQUEST);
+                // 错误码151
+                Log error = new Log(ErrorCode.Record_Post_Error, "Invalid record");
+                log_repository.save(error);
+                return new ResponseEntity<>("Record added failed", HttpStatus.BAD_REQUEST);
             }
             List<HistoryRecord> user = record_repository.findByUid(history_record.getUid());
 //            testing
@@ -119,7 +124,7 @@ public class ApiController {
 //            for (HistoryRecord record : user) {
 //                System.out.println(record.getTime());
 //            }
-            if (user.size() >= 100) {
+            if (user.size() >= 100) { //限制不能超过100个记录 超过一次删掉5个
                 //按照时间戳排序
                 Collections.sort(user);
                 //testing
@@ -142,19 +147,18 @@ public class ApiController {
             }
             return new ResponseEntity<>("Record added successfully", HttpStatus.OK);
         } catch (Exception e) {
-            // TODO: handle exception
+            // 错误码151
             Log error = new Log(ErrorCode.Record_Post_Error, e.toString());
             log_repository.save(error);
-            // logging...
             return new ResponseEntity<>("Record added failed", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
+    // 不用的api暂时没有加log
     @DeleteMapping(value = "/records")
     public void deleteRecords(@RequestParam Map<String, String> queryParams) {
         String bvid = queryParams.get("bvid");
         String uid = queryParams.get("uid");
-
         if (bvid == null && uid == null) {
             record_repository.deleteAll();
         } else if (bvid == null) {
@@ -169,6 +173,7 @@ public class ApiController {
         }
     }
 
+    // 不用的api暂时没有加log
     @DeleteMapping(value = "/videos")
     public void deleteVideos(@RequestParam Map<String, String> queryParams) {
         String bvid = queryParams.get("bvid");
@@ -182,56 +187,59 @@ public class ApiController {
 
     @GetMapping(value = "/videos")
     public ResponseEntity<?> getTopVideo(@RequestParam Map<String, String> queryParams) {
-        //返回下一条推荐的视频
-        //String event = queryParams.get("event");
-        //需要判断待推送的视频是否曾经推给过用户
-        String uid = queryParams.get("uid");
+        try {  // TODO:这边确实不知道要咋包 我就先把整个do while包起来了
+            //返回下一条推荐的视频
+            //String event = queryParams.get("event");
+            //需要判断待推送的视频是否曾经推给过用户
+            String uid = queryParams.get("uid");
 
-        TopVideo retVideo = null;
-        int counter = 0;
-        do {
-            //一直摇随机数，直到获得的视频列表非空
-            //但同时应该注意到没有可以推荐的视频的情况
-            //比如所有视频都已经过热被封档，或者分数都已经掉到0以下，或者本来表里就没有视频
-            //因此要设置一个计数器跳出，防止无限循环
-            double r = Math.random();
-            int upperbound = 0;
-            int lowerbound = 0;
-            if (r < 0.25) {
-                //低热度视频
-                upperbound = 25;
-            } else if (r < 0.55) {
-                //中热度视频
-                lowerbound = 25;
-                upperbound = 55;
+            TopVideo retVideo = null;
+            int counter = 0;
+            do {
+                //一直摇随机数，直到获得的视频列表非空
+                //但同时应该注意到没有可以推荐的视频的情况
+                //比如所有视频都已经过热被封档，或者分数都已经掉到0以下，或者本来表里就没有视频
+                //因此要设置一个计数器跳出，防止无限循环
+                double r = Math.random();
+                int upperbound = 0;
+                int lowerbound = 0;
+                if (r < 0.25) {
+                    //低热度视频
+                    upperbound = 25;
+                } else if (r < 0.55) {
+                    //中热度视频
+                    lowerbound = 25;
+                    upperbound = 55;
+                } else {
+                    //高热度视频
+                    lowerbound = 55;
+                    upperbound = 100;
+                }
+                List<TopVideo> videoWaitlist = video_repository.findByScoreBetween(lowerbound, upperbound);
+                int len = videoWaitlist.size();
+                if (len != 0) {
+                    Random rr = new Random();
+                    retVideo = videoWaitlist.get(rr.nextInt(len));
+                }
+                //判空 + 判重
+            } while ((retVideo == null || !record_repository.findByUidAndBvid(uid, retVideo.getBvid()).isEmpty()) && counter++ <= 5);
+            if (counter <= 5) {
+                //决定推荐该视频，这时，要扣除该视频的热度值 -2
+                retVideo.setScore(retVideo.getScore() - 2);
+                video_repository.save(retVideo);
+                return new ResponseEntity<>(retVideo, HttpStatus.OK);
             } else {
-                //高热度视频
-                lowerbound = 55;
-                upperbound = 100;
+                //错误码351
+                Log error = new Log(ErrorCode.Video_Promote_Error, "No Video to promote");
+                log_repository.save(error);
+                return new ResponseEntity<>("null", HttpStatus.OK);
             }
-
-            List<TopVideo> videoWaitlist = video_repository.findByScoreBetween(lowerbound, upperbound);
-            int len = videoWaitlist.size();
-            if (len != 0) {
-                Random rr = new Random();
-                retVideo = videoWaitlist.get(rr.nextInt(len));
-            }
-            //判空 + 判重
-        } while ((retVideo == null || !record_repository.findByUidAndBvid(uid, retVideo.getBvid()).isEmpty()) && counter++ <= 5);
-
-        if (counter <= 5) {
-            //决定推荐该视频，这时，要扣除该视频的热度值 -2
-            retVideo.setScore(retVideo.getScore() - 2);
-            video_repository.save(retVideo);
-            return new ResponseEntity<>(retVideo, HttpStatus.OK);
-        } else {
-            //logging...
-            //返回错误信息
-			Log error = new Log(ErrorCode.Video_Promote_Error, "No Video to promote");
-			log_repository.save(error);
+        }catch (Exception e) {
+            //错误码351
+            Log error = new Log(ErrorCode.Video_Promote_Error, "Save Record Error");
+            log_repository.save(error);
             return new ResponseEntity<>("null", HttpStatus.OK);
         }
-
     }
 
     @PatchMapping(value = "/videos") //或者patch方法 //用于更新表中视频的热度值
@@ -242,16 +250,14 @@ public class ApiController {
 
         //当用户未传来这些参数时，仍可以顺利构造Topvideo，但是String的值是null还是""?
         if (bvid == null || event == null) {
-            //logging...
-			Log error = new Log(ErrorCode.Video_Update_Error, "Invalid Parameters");
-			log_repository.save(error);
+            // 错误码352
+            Log error = new Log(ErrorCode.Video_Update_Error, "Invalid Parameters");
+            log_repository.save(error);
             return new ResponseEntity<>("Invalid parameters.", HttpStatus.BAD_REQUEST);
         }
 
         if (!video_repository.existsByBvid(bvid)) {
-            //logging...
-			Log error = new Log(ErrorCode.Video_Update_Error, "Invalid Video");
-			log_repository.save(error);
+            // 这里不算error
             return new ResponseEntity<>("Video is not in the table. Do nothing.", HttpStatus.OK);
         }
 
@@ -259,33 +265,33 @@ public class ApiController {
 
         //根据不同事件，增加不同分值，等待拓展更多事件
         int additionScore = 0;
-		switch (event) {
-			case "longEnough":
-				//观看时长达到一定百分比
-				additionScore = 2;
-				break;
-			case "like":
-				//点赞
-				additionScore = 4;
-				break;
-			case "coin":
-				//投币
-				additionScore = 6;
-				break;
-			case "favorite":
-				//收藏
-				additionScore = 8;
-				break;
-			case "share":
-				//分享
-				additionScore = 16;
-				break;
-			default:
-				//不合法的事件
-				Log error = new Log(ErrorCode.Video_Update_Error, "Invalid Event");
-				log_repository.save(error);
-				return new ResponseEntity<>("Event " + event + " is not defined.", HttpStatus.BAD_REQUEST);
-		}
+        switch (event) {
+            case "longEnough":
+                //观看时长达到一定百分比
+                additionScore = 2;
+                break;
+            case "like":
+                //点赞
+                additionScore = 4;
+                break;
+            case "coin":
+                //投币
+                additionScore = 6;
+                break;
+            case "favorite":
+                //收藏
+                additionScore = 8;
+                break;
+            case "share":
+                //分享
+                additionScore = 16;
+                break;
+            default:
+                //不合法的事件 错误码352
+                Log error = new Log(ErrorCode.Video_Update_Error, "Invalid Event");
+                log_repository.save(error);
+                return new ResponseEntity<>("Event " + event + " is not defined.", HttpStatus.BAD_REQUEST);
+        }
         video.setScore(video.getScore() + additionScore);
 
         //更新播放量(可选)
@@ -293,11 +299,10 @@ public class ApiController {
             try {
                 video.setPlay(Integer.parseInt(body.getPlay()));
             } catch (NumberFormatException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
-                //logging... 播放量有误
-				Log error = new Log(ErrorCode.Video_Update_Error, "Invalid play parameter");
-				log_repository.save(error);
+                // 错误码352
+                Log error = new Log(ErrorCode.Video_Update_Error, "Invalid play parameter");
+                log_repository.save(error);
                 return new ResponseEntity<>("Play is not a valid number.", HttpStatus.BAD_REQUEST);
             }
             //如果播放量过高，直接加分加到最高分
@@ -306,12 +311,18 @@ public class ApiController {
             }
         }
 
-        //save 能实现覆盖更新，而不用先删除再插入
-        video_repository.save(video);
-
+        try {
+            //save 能实现覆盖更新，而不用先删除再插入
+            video_repository.save(video);
+        } catch (Exception e){
+            Log error = new Log(ErrorCode.Video_Update_Error, "Save Error");
+            log_repository.save(error);
+            return new ResponseEntity<>("Saving failed", HttpStatus.BAD_REQUEST);
+        }
         return new ResponseEntity<>("Update score of video successfully.", HttpStatus.OK);
     }
 
+    // 不用的api暂时没有加log
     @PostMapping(value = "/videos")
     public ResponseEntity saveVideos(@RequestBody Map<String, List<TopVideo>> body) {
         try {
@@ -326,7 +337,6 @@ public class ApiController {
             }
             video_repository.saveAll(body.get("content"));
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             return new ResponseEntity<>("Videos have been added failed.", HttpStatus.BAD_REQUEST);
         }
@@ -337,6 +347,7 @@ public class ApiController {
     public ResponseEntity saveLog(@RequestBody Log log_info) {
         try {
             if (!ErrorCode.list.contains(log_info.getErrCode())) {
+                // 检查这个错误码是否有定义 错误码251
                 Log error = new Log(ErrorCode.Log_Post_Error, "Invalid Error Code");
                 log_repository.save(error);
                 return new ResponseEntity<>("Invalid Error Code", HttpStatus.BAD_REQUEST);
@@ -344,8 +355,8 @@ public class ApiController {
             log_repository.save(log_info);
             return new ResponseEntity<>("Log added successfully", HttpStatus.OK);
         } catch (Exception e) {
-            //TODO: exception handling
-            //试了一下如果没有body的话 不是走这里handle的 所以不会加到数据库里...
+            //错误码352
+            //TODO: 试了一下如果没有body的话 不是走这里handle的 所以不会加到数据库里...
             Log error = new Log(ErrorCode.Log_Post_Error, e.toString());
             log_repository.save(error);
             return new ResponseEntity<>("Log added failed", HttpStatus.BAD_REQUEST);
@@ -357,7 +368,7 @@ public class ApiController {
         try {
             return log_repository.findAll();
         } catch (Exception e) {
-            //TODO: exception handling
+            //错误码252
             Log error = new Log(ErrorCode.Log_Get_Error, e.toString());
             log_repository.save(error);
             return new ArrayList<Log>();

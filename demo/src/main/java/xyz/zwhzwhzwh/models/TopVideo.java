@@ -1,6 +1,3 @@
-/**
- * 
- */
 package xyz.zwhzwhzwh.models;
 
 import org.bson.types.ObjectId;

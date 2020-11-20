@@ -23,7 +23,7 @@ public interface RecordRepository extends MongoRepository<HistoryRecord, ObjectI
 	List<HistoryRecord> findAll();
 	
 	List<HistoryRecord> findByUid(@Param("uid") String uid);
-	
+
 	List<HistoryRecord> findByBvid(@Param("bvid") String bvid);
 	
 	List<HistoryRecord> findByUidAndBvid(@Param("uid") String uid, @Param("bvid") String bvid);

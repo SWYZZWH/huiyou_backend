@@ -61,11 +61,6 @@ public class ApiController {
     @Autowired
     private LogRepository log_repository;
 
-    @GetMapping(value = "/all")
-    public List<HistoryRecord> getAllHistoryRecords() {
-        return record_repository.findAll();
-    }
-
     @GetMapping(value = "/records")
     public List<HistoryRecord> getAllHistoryRecords(@RequestParam Map<String, String> queryParams) {
         try {
@@ -112,7 +107,22 @@ public class ApiController {
             return new ArrayList<HistoryRecord>();
         }
     }
-
+    
+    //测试用api
+    @PostMapping(value = "/records/all")
+    public ResponseEntity saveRecords(@RequestBody Map<String, List<HistoryRecord>> body) {
+        try {
+            //post body的格式为{content:[TopVideo1, TopVideo2]}
+            //将所有的TopVideo存入表中，可能存在空或不合法的body的情况，要处理异常
+            record_repository.saveAll(body.get("content"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Records have been added failed.", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>("Records have been added successfully.", HttpStatus.OK);
+    }
+    
+    
     @PostMapping(value = "/records")
     public ResponseEntity<?> saveOrUpdateRecord(@RequestBody HistoryRecord history_record) {
         try {
@@ -157,7 +167,7 @@ public class ApiController {
             return new ResponseEntity<>("Record added failed", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    
     // 不用的api暂时没有加log
     @DeleteMapping(value = "/records")
     public void deleteRecords(@RequestParam Map<String, String> queryParams) {
@@ -187,6 +197,19 @@ public class ApiController {
             List<TopVideo> videos = video_repository.findByBvid(bvid);
             video_repository.deleteAll(videos);
         }
+    }
+    
+    //测试用api
+    @GetMapping(value = "/videos/all")
+    public List<TopVideo> getTopVideos(@RequestParam Map<String, String> queryParams) {
+    	try {
+			List<TopVideo> retVideos = video_repository.findAll();
+			return retVideos;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList<TopVideo>();
+		}
+    	
     }
 
     @GetMapping(value = "/videos")
@@ -326,7 +349,7 @@ public class ApiController {
         }
         return new ResponseEntity<>("Update score of video successfully.", HttpStatus.OK);
     }
-
+    
     // 不用的api暂时没有加log
     @PostMapping(value = "/videos")
     public ResponseEntity saveVideos(@RequestBody Map<String, List<TopVideo>> body) {

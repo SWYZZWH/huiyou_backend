@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: xyz.zwhzwhzwh.demo.DemoApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.085 s - in xyz.zwhzwhzwh.demo.DemoApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.279 s - in xyz.zwhzwhzwh.demo.DemoApplicationTests

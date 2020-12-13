@@ -1,12 +1,13 @@
-F:\project\huiyou_backend\demo\src\main\java\xyz\zwhzwhzwh\models\Log.java
+F:\project\huiyou_backend\demo\src\main\java\xyz\zwhzwhzwh\models\Video.java
 F:\project\huiyou_backend\demo\src\main\java\xyz\zwhzwhzwh\DemoApplication.java
 F:\project\huiyou_backend\demo\src\main\java\xyz\zwhzwhzwh\repositories\RecordRepository.java
+F:\project\huiyou_backend\demo\src\main\java\xyz\zwhzwhzwh\models\UserChart.java
+F:\project\huiyou_backend\demo\src\main\java\xyz\zwhzwhzwh\models\Log.java
 F:\project\huiyou_backend\demo\src\main\java\xyz\zwhzwhzwh\repositories\LogRepository.java
 F:\project\huiyou_backend\demo\src\main\java\xyz\zwhzwhzwh\repositories\VideoRepository.java
 F:\project\huiyou_backend\demo\src\main\java\xyz\zwhzwhzwh\models\HistoryRecord.java
 F:\project\huiyou_backend\demo\src\main\java\xyz\zwhzwhzwh\repositories\UserChartRepository.java
 F:\project\huiyou_backend\demo\src\main\java\xyz\zwhzwhzwh\controllers\ApiController.java
-F:\project\huiyou_backend\demo\src\main\java\xyz\zwhzwhzwh\models\UserChart.java
 F:\project\huiyou_backend\demo\src\main\java\xyz\zwhzwhzwh\SpringConfig.java
 F:\project\huiyou_backend\demo\src\main\java\xyz\zwhzwhzwh\models\TopVideo.java
 F:\project\huiyou_backend\demo\src\main\java\xyz\zwhzwhzwh\models\EventPost.java

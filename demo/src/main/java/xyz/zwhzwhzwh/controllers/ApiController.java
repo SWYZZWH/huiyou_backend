@@ -22,9 +22,12 @@ import xyz.zwhzwhzwh.models.EventPost;
 import xyz.zwhzwhzwh.models.HistoryRecord;
 import xyz.zwhzwhzwh.models.TopVideo;
 import xyz.zwhzwhzwh.models.Log;
+import xyz.zwhzwhzwh.models.UserChart;
+import xyz.zwhzwhzwh.models.Video;
 import xyz.zwhzwhzwh.repositories.RecordRepository;
 import xyz.zwhzwhzwh.repositories.VideoRepository;
 import xyz.zwhzwhzwh.repositories.LogRepository;
+import xyz.zwhzwhzwh.repositories.UserChartRepository;
 
 /**
  * 解析url，并调用对应的方法操作数据库
@@ -60,6 +63,9 @@ public class ApiController {
 
     @Autowired
     private LogRepository log_repository;
+
+    @Autowired
+    private UserChartRepository user_repository;
 
     @GetMapping(value = "/records")
     public List<HistoryRecord> getAllHistoryRecords(@RequestParam Map<String, String> queryParams) {
@@ -272,11 +278,12 @@ public class ApiController {
     @PatchMapping(value = "/videos") //或者patch方法 //用于更新表中视频的热度值
     public ResponseEntity<?> saveOrUpdateVideos(@RequestBody EventPost body) {
 
+        String uid = body.getUid();
         String event = body.getEvent();
         String bvid = body.getBvid();
 
         //当用户未传来这些参数时，仍可以顺利构造Topvideo，但是String的值是null还是""?
-        if (bvid == null || event == null) {
+        if (uid == null || bvid == null || event == null) {
             // 错误码473
             Log error = new Log(ErrorCode.Video_Update_Invalid_Error, "Invalid Parameters");
             log_repository.save(error);
@@ -289,6 +296,13 @@ public class ApiController {
         }
 
         TopVideo video = video_repository.findByBvid(bvid).get(0);
+
+        UserChart user;
+        if ((user = user_repository.findByUid(uid)) == null) {
+            System.out.println("creating a new record");
+            user = new UserChart(uid);
+        }
+        System.out.println(user.getUid());
 
         //根据不同事件，增加不同分值，等待拓展更多事件
         int additionScore = 0;
@@ -320,6 +334,7 @@ public class ApiController {
                 return new ResponseEntity<>("Event " + event + " is not defined.", HttpStatus.BAD_REQUEST);
         }
         video.setScore(video.getScore() + additionScore);
+        user.addNewVideo(bvid);
 
         //更新播放量(可选)
         if (body.getPlay() != null) {
@@ -335,12 +350,15 @@ public class ApiController {
             //如果播放量过高，直接加分加到最高分
             if (video.getPlay() > 100) {
                 video.setScore(70);
+                //？这里为啥是70分
+                user.moveToTop(bvid);
             }
         }
 
         try {
             //save 能实现覆盖更新，而不用先删除再插入
             video_repository.save(video);
+            user_repository.save(user);
         } catch (Exception e){
             //错误码474
             Log error = new Log(ErrorCode.Video_Save_Error, "Save Error");
@@ -401,5 +419,19 @@ public class ApiController {
             log_repository.save(error);
             return new ArrayList<Log>();
         }
+    }
+
+    @GetMapping(value = "/chart")
+    public List<Video> getChartVideos(@RequestParam Map<String, String> queryParams){
+        String uid = queryParams.get("uid");
+        UserChart user = user_repository.findByUid(uid);
+
+        List<Video> ret = user.getChart();
+        for(Video e : ret){
+            System.out.println(e.getBvid());
+            TopVideo target = video_repository.findByBvid(e.getBvid()).get(0);
+            e.setScore(target.getScore());
+        }
+        return ret;
     }
 }

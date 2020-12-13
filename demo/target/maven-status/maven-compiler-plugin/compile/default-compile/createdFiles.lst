@@ -1,7 +1,11 @@
+xyz\zwhzwhzwh\models\UserChart.class
 xyz\zwhzwhzwh\controllers\ErrorCode.class
 xyz\zwhzwhzwh\DemoApplication.class
+xyz\zwhzwhzwh\models\Video.class
 xyz\zwhzwhzwh\controllers\ApiController.class
+xyz\zwhzwhzwh\models\VideoInfo.class
 xyz\zwhzwhzwh\models\HistoryRecord.class
+xyz\zwhzwhzwh\repositories\UserChartRepository.class
 xyz\zwhzwhzwh\repositories\VideoRepository.class
 xyz\zwhzwhzwh\DemoApplication$1.class
 xyz\zwhzwhzwh\SpringConfig.class

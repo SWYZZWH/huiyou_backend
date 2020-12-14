@@ -299,7 +299,6 @@ public class ApiController {
 
         UserChart user;
         if ((user = user_repository.findByUid(uid)) == null) {
-            System.out.println("creating a new record");
             user = new UserChart(uid);
         }
         System.out.println(user.getUid());
@@ -428,7 +427,6 @@ public class ApiController {
 
         List<Video> ret = user.getChart();
         for(Video e : ret){
-            System.out.println(e.getBvid());
             TopVideo target = video_repository.findByBvid(e.getBvid()).get(0);
             e.setScore(target.getScore());
         }

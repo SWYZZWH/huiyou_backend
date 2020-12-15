@@ -9,15 +9,15 @@ import java.util.List;
 // 用来储存单个视频数据
 class VideoInfo {
     private String bvid;
-    private long PosTime;
-    private long TopTime;
+    private long postime;
+    private long toptime;
 
     // 第一次正向反馈的时候储存新数据
     public VideoInfo(String bvid) {
         this.bvid = bvid;
         Date now = new Date();
-        this.PosTime = now.getTime();
-        this.TopTime = -1;
+        this.postime = now.getTime();
+        this.toptime = -1;
     }
 
     public String getBvid() {
@@ -28,21 +28,21 @@ class VideoInfo {
         this.bvid = bvid;
     }
 
-    public long getPosTime() {
-        return PosTime;
+    public long getPostime() {
+        return postime;
     }
 
-    public long getTopTime() {
-        return TopTime;
+    public long getToptime() {
+        return toptime;
     }
 
-    public void setTopTime() {
+    public void setToptime() {
         Date now = new Date();
-        this.TopTime = now.getTime();
+        this.toptime = now.getTime();
     }
 
     public void print(){
-        System.out.println(bvid + " " + PosTime + " " + TopTime);
+        System.out.println(bvid + " " + postime + " " + toptime);
     }
 }
 
@@ -69,7 +69,7 @@ public class UserChart {
     public void moveToTop(String bvid) {
         for (VideoInfo e : PosNTop) {
             if (e.getBvid().equals(bvid)) {
-                e.setTopTime();
+                e.setToptime();
                 PosTop.add(e);
                 PosNTop.remove(e);
                 break;
@@ -95,7 +95,7 @@ public class UserChart {
         List<Video> ret = new ArrayList<Video>();
 
         for(VideoInfo e : PosTop){
-            Video n = new Video(e.getBvid(),e.getPosTime(),e.getTopTime());
+            Video n = new Video(e.getBvid(),e.getPostime(),e.getToptime());
             ret.add(n);
         }
         return ret;

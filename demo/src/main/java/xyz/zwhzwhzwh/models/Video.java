@@ -5,16 +5,16 @@ public class Video {
 //    private String url;
 //    private String author;
 //    private String title;
-    private long PosTime;
-    private long TopTime;
+    private long postime;
+    private long toptime;
 
     //为了测试/chart添加的key
     private int score;
 
     public Video(String bvid,long PosTime,long TopTime){
         this.bvid = bvid;
-        this.PosTime = PosTime;
-        this.TopTime = TopTime;
+        this.postime = PosTime;
+        this.toptime = TopTime;
         this.score = -1;
 //        this.url = null;
 //        this.author = null;
@@ -26,11 +26,11 @@ public class Video {
     }
 
     public long getPosTime() {
-        return PosTime;
+        return postime;
     }
 
     public long getTopTime() {
-        return TopTime;
+        return toptime;
     }
 
 //    public String getUrl() {

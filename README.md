@@ -1,6 +1,27 @@
 # README
 
-### Update 2020/11/08 by zwh
+## Update 2020/12/14 by yst
+
+添加用户榜单相关功能
+- 新增UserChart表
+- 新增Video类型
+- 添加获取榜单api
+- api文档待更新
+- 错误处理待添加
+
+## Update 2020/11/20 by yst
+
+新增log功能
+
+- 添加log表
+- 定义部分错误码
+- 提供添加和获取log的api接口
+- 对部分api中可能出现的错误进行记录
+- api文档待更新
+
+添加用户推送历史记录数量限制
+
+## Update 2020/11/08 by zwh
 
 实现了第一版的推荐链
 
@@ -80,7 +101,7 @@ public class HistoryRecord {
     private String type;
 ```
 
-### Update 2020/10/20 by zwh
+## Update 2020/10/20 by zwh
 
 更新了API文档 https://www.showdoc.cc/1096444849681105
 
@@ -92,7 +113,7 @@ public class HistoryRecord {
 
 
 
-### Update 2020/10/14 by zwh
+## Update 2020/10/14 by zwh
 
 更新了Todo list
 
@@ -100,13 +121,13 @@ public class HistoryRecord {
 
 
 
-### Update 2020/10/11 by zwh
+## Update 2020/10/11 by zwh
 
 实现了自动部署
 
 
 
-### Update 2020/10/10 by zwh
+## Update 2020/10/10 by zwh
 
 已将我们的服务设置为守护进程，现在关闭SSH连接后服务仍可以在后台运行
 
@@ -120,7 +141,7 @@ public class HistoryRecord {
 
 
 
-
+## 项目简介
 
 ### 配置java开发环境
 

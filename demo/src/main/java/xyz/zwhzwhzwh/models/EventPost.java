@@ -4,17 +4,26 @@ package xyz.zwhzwhzwh.models;
  * 使用如下类接收post的body
  */
 public class EventPost {
+	private String uid;
 	private String bvid;
 	private String event;
 	private String play; // b站的播放量为String
 	
-	public EventPost(String bvid, String event, String play) {
+	public EventPost(String uid, String bvid, String event, String play) {
 		super();
+		this.uid = uid;
 		this.bvid = bvid;
 		this.event = event;
 		this.play = play;
 	}
 
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid){
+		this.uid = uid;
+	}
 	public String getBvid() {
 		return bvid;
 	}

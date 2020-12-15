@@ -432,4 +432,14 @@ public class ApiController {
         }
         return ret;
     }
+
+    @DeleteMapping(value = "/chart")
+    public void deleteChart(@RequestParam Map<String, String> queryParams){
+        String uid = queryParams.get("uid");
+        if (uid == null) {
+            user_repository.deleteAll();
+        } else {
+            user_repository.deleteByUid(uid);
+        }
+    }
 }

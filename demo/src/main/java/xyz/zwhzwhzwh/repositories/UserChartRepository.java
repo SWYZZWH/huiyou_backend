@@ -12,4 +12,5 @@ public interface UserChartRepository extends MongoRepository<UserChart, String> 
 
     UserChart findByUid(@Param("uid") String uid);
     Boolean existsByUid(@Param("uid") String uid);
+    void deleteByUid(@Param("uid") String uid);
 }

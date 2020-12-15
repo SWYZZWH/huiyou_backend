@@ -348,7 +348,7 @@ public class ApiController {
             }
             //如果播放量过高，直接加分加到最高分
             if (video.getPlay() > 100) {
-                video.setScore(70);
+                video.setScore(101);
                 //？这里为啥是70分
                 user.moveToTop(bvid);
             }

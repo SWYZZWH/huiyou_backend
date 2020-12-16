@@ -130,20 +130,27 @@ public class ApiController {
     
     
     @PostMapping(value = "/records")
-    public ResponseEntity<?> saveOrUpdateRecord(@RequestBody HistoryRecord history_record) {
+    public ResponseEntity<?> saveOrUpdateRecord(@RequestBody Map<String, String> queryParams) {
         try {
-            if (history_record.getBvid() == null || history_record.getUid() == null || history_record.getBvid().equals("") || history_record.getUid().equals("")) {
+            String uid = queryParams.get("uid");
+            String bvid = queryParams.get("bvid");
+            String pic = queryParams.get("pic");
+            String author = queryParams.get("author");
+            String title = queryParams.get("title");
+            System.out.println(uid);
+            System.out.println(bvid);
+            if (uid == null || bvid == null || uid.equals("") || bvid.equals("")) {
                 // 错误码452
                 Log error = new Log(ErrorCode.Record_Post_Invalid_Error, "Invalid record");
                 log_repository.save(error);
                 return new ResponseEntity<>("Record added failed", HttpStatus.BAD_REQUEST);
             }
-            List<HistoryRecord> user = record_repository.findByUid(history_record.getUid());
+            List<HistoryRecord> user = record_repository.findByUid(uid);
 //            testing
-            System.out.println("origin:");
-            for (HistoryRecord record : user) {
-                System.out.println(record.getTime());
-            }
+//            System.out.println("origin:");
+//            for (HistoryRecord record : user) {
+//                System.out.println(record.getTime());
+//            }
             if (user.size() >= 100) { //限制不能超过100个记录 超过一次删掉5个
                 //按照时间戳排序
                 Collections.sort(user);
@@ -157,12 +164,11 @@ public class ApiController {
                 //删除
                 record_repository.deleteAll(delete);
             }
-            record_repository.save(history_record);
+            record_repository.save(new HistoryRecord(uid,bvid));
             //如果这条记录是由前端随机选取视频产生的，那么要把视频保存下来，播放量可以先置为1
-            String bvid = history_record.getBvid();
             if (!video_repository.existsByBvid(bvid)) {
 
-                TopVideo video = new TopVideo(bvid, initialScore, 1);
+                TopVideo video = new TopVideo(bvid, initialScore, 1,pic,author,title);
                 video_repository.save(video);
             }
             return new ResponseEntity<>("Record added successfully", HttpStatus.OK);
@@ -428,7 +434,9 @@ public class ApiController {
         List<Video> ret = user.getChart();
         for(Video e : ret){
             TopVideo target = video_repository.findByBvid(e.getBvid()).get(0);
-            e.setScore(target.getScore());
+            e.setPic(target.getPic());
+            e.setAuthor(target.getAuthor());
+            e.setTitle(target.getTitle());
         }
         return ret;
     }

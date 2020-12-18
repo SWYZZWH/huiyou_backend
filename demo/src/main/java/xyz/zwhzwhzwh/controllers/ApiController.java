@@ -428,17 +428,26 @@ public class ApiController {
 
     @GetMapping(value = "/chart")
     public List<Video> getChartVideos(@RequestParam Map<String, String> queryParams){
-        String uid = queryParams.get("uid");
-        UserChart user = user_repository.findByUid(uid);
-
-        List<Video> ret = user.getChart();
-        for(Video e : ret){
-            TopVideo target = video_repository.findByBvid(e.getBvid()).get(0);
-            e.setPic(target.getPic());
-            e.setAuthor(target.getAuthor());
-            e.setTitle(target.getTitle());
-        }
-        return ret;
+        try {
+			String uid = queryParams.get("uid");
+			if(null == uid)
+				return new ArrayList<Video>();
+			UserChart user = user_repository.findByUid(uid);
+			if(null == user)
+				return new ArrayList<Video>();
+			List<Video> ret = user.getChart();
+			for(Video e : ret){
+			    TopVideo target = video_repository.findByBvid(e.getBvid()).get(0);
+			    e.setPic(target.getPic());
+			    e.setAuthor(target.getAuthor());
+			    e.setTitle(target.getTitle());
+			}
+			return ret;
+		} catch (Exception ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+			return new ArrayList<Video>();
+		}
     }
 
     @DeleteMapping(value = "/chart")
